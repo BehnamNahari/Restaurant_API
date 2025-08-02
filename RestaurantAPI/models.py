@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=25)
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.name
@@ -56,6 +57,8 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    total_price = models.FloatField()
+    item_price = models.FloatField()
 
     def __str__(self):
         return f"{self.quantity} x {self.menu_item.name}"
