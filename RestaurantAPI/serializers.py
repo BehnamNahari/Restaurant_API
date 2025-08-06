@@ -1,3 +1,4 @@
+from django.utils import timezone
 from .models import (MenuItem,Category,OrderItem,Order,ReservationItem,Reservation,Rating)
 from rest_framework import serializers
 
@@ -8,7 +9,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class MenuItemSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
-    category_id = serializers.PrimaryKeyRelatedField(queryset=MenuItem.objects.all(),write_only=True)
+    category_id = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(),write_only=True)
 
     class Meta:
         model = MenuItem
@@ -78,9 +79,9 @@ class OrderSerializer(serializers.ModelSerializer):
         items_data = validated_data.pop('items')
         user = self.context['request'].user
         total_order_price = 0
-        order = Order.objects.create(user=user,**validated_data)
+        order = Order.objects.create(user=user,total_price=0,**validated_data)
         for item in items_data:
-            menu_item = item['menu_item']
+            menu_item = item['menu_item_id']
             quantity = item['quantity']
             item_price = menu_item.price
             item_total_price = item_price * quantity
@@ -121,14 +122,18 @@ class ReservationSerializer(serializers.ModelSerializer):
             'user',
         ]
 
+    def validate_requested_at(self, value):
+        request = self.context['request']
+        if value < timezone.now():
+            raise serializers.ValidationError('you can only reserve for future times!')
+
     def create(self, validated_data):
         items_data = validated_data.pop('items')
         user = self.context['request'].user
         reservation = Reservation.objects.create(user=user,**validated_data)
         for item in items_data:
-            ReservationItem.objects.create(reservation=reservation)
-
-            menu_item = item['menu_item']
+            menu_item = item['menu_item_id']
             quantity = item['quantity']
+            ReservationItem.objects.create(reservation=reservation,menu_item=menu_item,quantity=quantity)
 
         return reservation

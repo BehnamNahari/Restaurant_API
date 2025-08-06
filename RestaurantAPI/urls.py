@@ -5,12 +5,15 @@ from .views import OrderListCreateView, OrderDetailView, ReservationListCreateVi
     RatingListCreateView, RatingDetailView, MenuItemListView, MenuItemDetailView
 
 urlpatterns = [
-    path('orders/',OrderListCreateView.as_view()),
-    path('orders/<int:pk>',OrderDetailView.as_view()),
-    path('reservations/',ReservationListCreateView.as_view()),
-    path('reservations/<int:pk>',ReservationDetailView.as_view()),
-    path('Ratings/',RatingListCreateView.as_view()),
-    path('ratings/<int:pk>',RatingDetailView.as_view()),
-    path("menu-items/",MenuItemListView.as_view()),
-    path("menu-items/<int:pk>",MenuItemDetailView.as_view()),
+    path('orders/', OrderListCreateView.as_view(), name='order-list'),
+    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+
+    path('reservations/', ReservationListCreateView.as_view(), name='reservation-list'),
+    path('reservations/<int:pk>/', ReservationDetailView.as_view(), name='reservation-detail'),
+
+    path('ratings/', RatingListCreateView.as_view(), name='rating-list'),
+    path('ratings/<int:pk>/', RatingDetailView.as_view(), name='rating-detail'),
+
+    path('menu-items/', MenuItemListView.as_view(), name='menuitem-list'),
+    path('menu-items/<int:pk>/', MenuItemDetailView.as_view(), name='menuitem-detail'),
 ]
