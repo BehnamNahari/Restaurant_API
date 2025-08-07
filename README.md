@@ -82,7 +82,6 @@ GET /auth/users/me/ Get current authenticated user
 
 
 
----
 
  Menu Items
 
@@ -96,7 +95,6 @@ DELETE /api/menu-items/{id}/ Delete menu item (admin only)
 
 
 
----
 
  Categories
 
@@ -107,7 +105,6 @@ POST /api/categories/ Create new category (admin only)
 
 
 
----
 
  Cart
 
@@ -119,7 +116,6 @@ DELETE /api/cart/ Clear cart
 
 
 
----
 
  Orders
 
@@ -133,7 +129,6 @@ DELETE /api/orders/{id}/ Cancel order (user or manager)
 
 
 
----
 
  User Groups
 
@@ -148,7 +143,6 @@ DELETE /api/groups/delivery/users/{id}/ Remove user from delivery crew group
 
 
 
----
 
  Reservations
 
@@ -161,7 +155,6 @@ DELETE /api/reservations/{id}/ Cancel reservation
 
 
 
----
 
  Ratings
 
@@ -172,7 +165,6 @@ POST /api/ratings/ Add new rating for a menu item
 
 
 
----
 
  Notes:
 
