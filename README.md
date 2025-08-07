@@ -68,18 +68,123 @@ python manage.py runserver
 
 ---
 
-API Endpoints
+ API Endpoints
+
+ Authentication (Djoser + JWT)
 
 Method Endpoint Description
 
-GET /api/menu-items/ List menu items
-GET /api/menu-items/{id} Retrieve a single menu item
-GET/POST /api/ratings/ List or create ratings
-GET/PATCH/DELETE /api/ratings/{id} Retrieve, update, or delete a rating
-GET/POST /api/orders/ List or create orders
-GET/PATCH/DELETE /api/orders/{id} Retrieve, update, or delete an order
-GET/POST /api/reservations/ List or create reservations
-GET/PATCH/DELETE /api/reservations/{id} Retrieve, update, or delete a reservation
+POST /auth/users/ Register a new user
+POST /auth/jwt/create/ Obtain JWT access and refresh
+POST /auth/jwt/refresh/ Refresh access token
+POST /auth/jwt/verify/ Verify token
+GET /auth/users/me/ Get current authenticated user
+
+
+
+---
+
+ Menu Items
+
+Method Endpoint Description
+
+GET /api/menu-items/ List all menu items
+POST /api/menu-items/ Create new menu item (admin only)
+GET /api/menu-items/{id}/ Retrieve a single menu item
+PUT /api/menu-items/{id}/ Update menu item (admin only)
+DELETE /api/menu-items/{id}/ Delete menu item (admin only)
+
+
+
+---
+
+ Categories
+
+Method Endpoint Description
+
+GET /api/categories/ List all categories
+POST /api/categories/ Create new category (admin only)
+
+
+
+---
+
+ Cart
+
+Method Endpoint Description
+
+GET /api/cart/ View items in cart
+POST /api/cart/ Add item to cart
+DELETE /api/cart/ Clear cart
+
+
+
+---
+
+ Orders
+
+Method Endpoint Description
+
+GET /api/orders/ List all orders (manager / user)
+POST /api/orders/ Place a new order
+GET /api/orders/{id}/ Retrieve a specific order
+PUT /api/orders/{id}/ Update order (manager / delivery only)
+DELETE /api/orders/{id}/ Cancel order (user or manager)
+
+
+
+---
+
+ User Groups
+
+Method Endpoint Description
+
+GET /api/groups/manager/users/ List manager users
+POST /api/groups/manager/users/ Add user to manager group
+DELETE /api/groups/manager/users/{id}/ Remove user from manager group
+GET /api/groups/delivery/users/ List delivery crew users
+POST /api/groups/delivery/users/ Add user to delivery crew group
+DELETE /api/groups/delivery/users/{id}/ Remove user from delivery crew group
+
+
+
+---
+
+ Reservations
+
+Method Endpoint Description
+
+GET /api/reservations/ List all reservations (user / admin)
+POST /api/reservations/ Create a new reservation
+PUT /api/reservations/{id}/ Update reservation (user / admin)
+DELETE /api/reservations/{id}/ Cancel reservation
+
+
+
+---
+
+ Ratings
+
+Method Endpoint Description
+
+GET /api/ratings/ List all ratings
+POST /api/ratings/ Add new rating for a menu item
+
+
+
+---
+
+ Notes:
+
+Endpoints protected by JWT require Authorization: Bearer <access_token> in headers.
+
+Group-based permissions control access for:
+
+Manager – full control over menu, orders
+
+Delivery Crew – can view/update delivery orders
+
+Customers – can browse, order, reserve
 
 
 
